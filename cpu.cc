@@ -16,7 +16,7 @@ void Cpu::cycle()
     case 0x000:
       switch (_opcode) {
         case 0x00E0: // Clear the display. CLS
-          _display.Clear();
+          _display.clear();
           break;
         case 0x00EE: // Return from a subroutine. RET
           _pc = _stack[_sp];
@@ -148,17 +148,21 @@ void Cpu::cycle()
           _ram[_I + 2] = XREG % 10;
           break;
         case 0x0055: // Store registers V0 through Vx in memory starting at location I. LD [I], Vx
-          /*char x = (_opcode & 0xF00) >> 8;
+        {
+          char x = (_opcode & 0xF00) >> 8;
           for (char i = 0; i < x; i++) {
             _ram[_I + i] = _V[i];
-          }*/
+          }
           //memcpy(_memory + _I, opcode, x * sizof(char));
+        }
           break;
         case 0x0065: // Read registers V0 through Vx from memory starting at location I.  LD Vx, [I]
-          /*char x = (_opcode & 0xF00) >> 8;
+        {
+          char x = (_opcode & 0xF00) >> 8;
           for (char i = 0; i < x; i++) {
             _V[i] = _ram[_I + i];
-          }*/
+          }
+        }
          break;
         default:
           std::cout << "Bad op";
@@ -179,8 +183,10 @@ void Cpu::run()
   _dt = 0;
   _st = 0;
   for (;;) {
-    _opcode = (_ram[_pc] << 8) + _ram[_pc + 1];
+  /*  _opcode = (_ram[_pc] << 8) + _ram[_pc + 1];
     this->cycle();
     _pc +=2;
+    */
+    _display.draw();
   }
 }

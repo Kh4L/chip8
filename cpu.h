@@ -22,10 +22,9 @@ private:
   char _dt;
   char _st;
 
-
   Ram& _ram;
   Display& _display;
   Keys& _keys;
+
   void cycle();
-  void executeOpcode(const short opcode);
 };
