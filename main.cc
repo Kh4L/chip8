@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 		disassemble(argv[2]);
 	else {
 		Ram ram;
-		Display display;
+		Display display(0x10);
 		Keys keys;
 		Cpu cpu(ram, display, keys);
 		ram.loadProgram(argv[1]);

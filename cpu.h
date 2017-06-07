@@ -13,10 +13,10 @@ public:
 
 private:
   short _opcode;
-  short _V[16];
+  short _V[0x10];
   short _I;
   short _pc;
-  short _stack[16];
+  short _stack[0x10];
   char _sp;
 
   char _dt;

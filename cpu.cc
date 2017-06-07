@@ -94,6 +94,8 @@ void Cpu::cycle()
       break;
     case 0xA000: // Set I = nnn. LD I
       _I = _opcode & 0xFFF;
+
+      std::cout << "_I = " << _I << std::endl;
       break;
     case 0xB000: // Jump to location nnn + V0. JP
       _pc = _opcode & 0xFFF + _V[0];
@@ -102,11 +104,14 @@ void Cpu::cycle()
       _pc = (rand() % 256) & (_opcode & 0xFF);
       break;
     case 0xD000:
+    {
     // Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision. DRW
-      // TODO
-      //std::cout << "DRW V" << std::hex << xreg << ", V" << std::hex << yreg
-      //  << ", " << std::hex << (_opcode & 0xF);
-      break;
+      std::vector<char> sprite;
+      for (int i = 0; i < _opcode & 0xF; ++i)
+        sprite.push_back(_ram[_I + i]);
+      _V[0xF] = _display.drawSprite(XREG, YREG, sprite);
+    }
+    break;
     case 0xE000:
       switch (_opcode & 0x000F) {
         case 0x009E: // Skip next instruction if key with the value of Vx is pressed. SKP Vx
@@ -150,10 +155,10 @@ void Cpu::cycle()
         case 0x0055: // Store registers V0 through Vx in memory starting at location I. LD [I], Vx
         {
           char x = (_opcode & 0xF00) >> 8;
-          for (char i = 0; i < x; i++) {
+          for (char i = 0; i <= x; i++) {
             _ram[_I + i] = _V[i];
           }
-          //memcpy(_memory + _I, opcode, x * sizof(char));
+          //memcpy(_ram + _I, opcode, x * sizof(char));
         }
           break;
         case 0x0065: // Read registers V0 through Vx from memory starting at location I.  LD Vx, [I]
@@ -183,10 +188,15 @@ void Cpu::run()
   _dt = 0;
   _st = 0;
   for (;;) {
-  /*  _opcode = (_ram[_pc] << 8) + _ram[_pc + 1];
-    this->cycle();
+    _opcode = (_ram[_pc] << 8) + _ram[_pc + 1];
     _pc +=2;
-    */
+
+    this->cycle();
+
     _display.draw();
+    if (_dt > 0)
+      --_dt;
+    if (_st > 0)
+      --_st;
   }
 }

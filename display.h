@@ -7,11 +7,12 @@
 class Display
 {
 public:
-  Display();
-  bool updatePixel(short x, short y);
+  Display(unsigned int resolution = 2);
+  int drawSprite(int x, int y, std::vector<char>& sprite);
   void draw();
   void clear();
 private:
-  std::array<bool, 2048> _buffer; // 64x32 buffer
   sf::RenderWindow _renderWindow;
+  unsigned int _resolution;
+  std::array<bool, 2048> _buffer; // 64x32 buffer
 };
