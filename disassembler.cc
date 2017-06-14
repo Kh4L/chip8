@@ -102,7 +102,7 @@ void decodePrintOpcode(short opcode, short xreg, short yreg)
         << ", " << std::hex << (opcode & 0xF);
     break;
     case 0xE000:
-      switch (opcode & 0x000F) {
+      switch (opcode & 0x00FF) {
         case 0x009E: // Skip next instruction if key with the value of Vx is pressed.
           std::cout << "SKP V" << std::hex << xreg;
           break;

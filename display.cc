@@ -6,14 +6,13 @@ Display::Display(unsigned int resolution)
   :_renderWindow(sf::VideoMode(64 * resolution, 32 * resolution), "Chip8"),
   _resolution(resolution)
 {
-  _renderWindow.setFramerateLimit(30);
+  _renderWindow.setFramerateLimit(42);
   for (bool& px : _buffer)
     px = false;
 }
 
 int Display::drawSprite(int x, int y, std::vector<char>& sprite)
 {
-  std::cout << x << " "  <<  y << " with size "<< sprite.size();
   int collision = 0;
   for (unsigned int yDelta = 0; yDelta < sprite.size(); ++yDelta) {
     char currentByte = sprite[yDelta];

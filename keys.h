@@ -3,16 +3,23 @@
 #include <array>
 #include <fstream>
 #include <iostream>
-#include <memory>
-//#include <SFML/Keyboard.hpp>
+#include <vector>
+#include <SFML/Window/Keyboard.hpp>
 
+struct KeyMap
+{
+  sf::Keyboard::Key key;
+  short value;
+};
 
 class Keys : public std::array<bool, 16>
 {
 public:
   Keys();
-  short wait();
+  short waitForKey();
+  void getKeys();
 
 private:
-  void getKeys();
+  sf::Keyboard _keyboard;
+  std::vector<KeyMap> _map;
 };

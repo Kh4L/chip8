@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-class Ram : public std::array<char, 4096>
+class Ram : public std::array<unsigned char, 4096>
 {
 public:
   Ram();

@@ -30,9 +30,9 @@ bool Ram::loadProgram(char *filename)
 {
   std::ifstream binaryfstream(filename, std::ios::binary);
   int pos = 0x200;
-  char readByte;
   while (!binaryfstream.eof()) {
-        operator[](pos) = binaryfstream.get();
+        unsigned char readByte = binaryfstream.get();
+        operator[](pos) = readByte;
         pos++;
   }
   return true;
